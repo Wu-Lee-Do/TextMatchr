@@ -1,0 +1,57 @@
+body{
+  background-color: #C2C2C2;
+  color: #292929;
+}
+
+#wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.group-box{
+  margin-top: 200px;
+  display: flex;
+  justify-content: space-between;
+
+  width: 97.222222vw;
+}
+
+.group{  
+  width: 45.138888vw;
+  height: 300px;
+
+  border: none;
+  /* outline: none; */
+
+  resize: none;
+
+  font-size: 1.111111vw;
+  font-weight: 600;  
+
+}
+
+.control-group{}
+
+.experimental-group{}
+
+.compare-button{
+  margin-top: 100px;
+
+  width: 10.416666vw;
+  height: 50px;
+
+  background-color: #949494;
+  border-radius: 0.694444vw;
+
+  text-align: center;
+  line-height: 50px;
+
+  transition: all 0.3s;
+}
+
+.compare-button:hover{
+  cursor: pointer;
+  background-color: #E6E6E6;
+}
