@@ -70,11 +70,5 @@ function App() {
     </React.Fragment>
   );
 }
-// test 1
-// test 2
-// test 3
-// test 4
-// yoon test1
-// yoon test2
 
 export default App;
