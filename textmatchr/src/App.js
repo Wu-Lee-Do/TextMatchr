@@ -28,8 +28,8 @@ function App() {
     }
   };
 
-//reset버튼 누를시 resetHandler작동
-//텍스트 박스 값 결과 값 초기화
+  //reset버튼 누를시 resetHandler작동
+  //텍스트 박스 값 결과 값 초기화
   const resetHandler = () => {
     setInputText1("");
     setInputText2("");
@@ -40,8 +40,8 @@ function App() {
       <GlobalStyle />
       <div id="wrapper">
         <div className="group-box">
-          <button className="reset-button" onClick={resetHandler}> 
-          {/* 리셋버튼 추가 css : reset-button onClick시 resetHandler호출 */}
+          <button className="reset-button" onClick={resetHandler}>
+            {/* 리셋버튼 추가 css : reset-button onClick시 resetHandler호출 */}
             reset
           </button>
           <textarea
@@ -74,4 +74,5 @@ function App() {
 // test 2
 // test 3
 // test 4
+
 export default App;
