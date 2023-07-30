@@ -1,9 +1,10 @@
-import "./App.css";
-// reset.css 초기화 적용(Node.js 패키지 사용)
-// https://velog.io/@daymoon_/React-styled-reset - 참고 자료 출처
 import React, { useState } from "react";
+
+import "./App.css";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+// reset.css 초기화 적용(Node.js 패키지 사용)
+// https://velog.io/@daymoon_/React-styled-reset - 참고 자료 출처
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -35,22 +36,52 @@ function App() {
     setInputText2("");
     setResult(null);
   };
+
+  // change 버튼 누를시 changeHandler 작동
+  // 각각의 textarea 의 값 서로 위치 변환
+  const changeHandler = () => {
+    setInputText1(inputText2);
+    setInputText2(inputText1);
+  }
+
+  // const findDifferenct = (a, b) => {
+  //   const difference = [];
+  //   const maxLength = Math.max(a.length, b.length);
+  //   for(let i =  0; i < maxLength; i ++){
+  //     const char1 = a[i];
+  //     const char2 = b[i];
+
+  //     if(char1 !== char2){
+  //       difference.push({
+  //         index: i,
+  //         char1: char1 || '',
+  //         char2: char2 || '',
+  //       });
+  //     }
+  //   } 
+  //   return difference;
+  // }
+
+  // const a = "Hello";
+  // const b = "Hello~";
+
+  // const differences = findDifferenct(a, b);
+  // console.log(differences);
+
   return (
     <React.Fragment>
       <GlobalStyle />
       <div id="wrapper">
         <div className="group-box">
-          <button className="reset-button" onClick={resetHandler}>
-            {/* 리셋버튼 추가 css : reset-button onClick시 resetHandler호출 */}
-            reset
-          </button>
+        <div className="reset-button button" onClick={resetHandler}>reset</div>
           <textarea
             className="control-group group"
             type="text"
             placeholder="기준이 되는 텍스트를 입력해 주세요."
-            value={inputText1}
+            value={inputText1}  
             onChange={(e) => setInputText1(e.target.value)}
           />
+          <div className="change-button" onClick={changeHandler}></div>
           <textarea
             className="experimental-group group"
             type="text"
@@ -59,9 +90,9 @@ function App() {
             onChange={(e) => setInputText2(e.target.value)}
           />
         </div>
-        <div className="compare-button" onClick={compareHandler}>
-          비교하기
-        </div>
+
+        <div className="compare-button button" onClick={compareHandler}>비교하기</div>
+
         {result !== null && (
           <div className="compare-result">결과: {result}</div>
         )}
