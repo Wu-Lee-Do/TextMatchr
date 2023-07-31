@@ -64,9 +64,7 @@ function App() {
         </div>
 
         <div className="compare-button button" onClick={compareHandler}>비교하기</div>
-        {
-          <div className="compare-result">{`${result}`}</div>  
-        }
+        <div className="compare-result">{`${result}`}</div>  
       </div>
     </React.Fragment>
   );
