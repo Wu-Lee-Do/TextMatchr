@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./App.css";
 import { createGlobalStyle } from "styled-components";
@@ -10,6 +10,19 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
   /* other styles */
 `;
+
+//불일치 하이라이트 로직
+const findDifference = (inputText1, inputText2) => {
+  const differences = [];
+  const maxLength = Math.max(inputText1.length, inputText2.length);
+  for (let i = 0; i < maxLength; i++) {
+    if (inputText1[i] !== inputText2[i]) {
+      differences.push(i);
+    }
+  }
+  return differences;
+};
+
 
 function App() {
   //useState이용 inputText1,2로 구별
@@ -25,7 +38,7 @@ function App() {
     if (inputText1 === inputText2) {
       setResult("일치");
     } else {
-      setResult("불일치");
+      setResult(findDifference(inputText1, inputText2));
     }
   };
 
@@ -42,43 +55,26 @@ function App() {
   const changeHandler = () => {
     setInputText1(inputText2);
     setInputText2(inputText1);
-  }
+  };
 
-  // const findDifferenct = (a, b) => {
-  //   const difference = [];
-  //   const maxLength = Math.max(a.length, b.length);
-  //   for(let i =  0; i < maxLength; i ++){
-  //     const char1 = a[i];
-  //     const char2 = b[i];
-
-  //     if(char1 !== char2){
-  //       difference.push({
-  //         index: i,
-  //         char1: char1 || '',
-  //         char2: char2 || '',
-  //       });
-  //     }
-  //   } 
-  //   return difference;
-  // }
-
-  // const a = "Hello";
-  // const b = "Hello~";
-
-  // const differences = findDifferenct(a, b);
-  // console.log(differences);
+  //불일치 하이라이트 로직
+  useEffect(() => {
+    setResult(findDifference(inputText1, inputText2));
+  }, [inputText1, inputText2]);
 
   return (
     <React.Fragment>
       <GlobalStyle />
       <div id="wrapper">
         <div className="group-box">
-        <div className="reset-button button" onClick={resetHandler}>reset</div>
+          <div className="reset-button button" onClick={resetHandler}>
+            reset
+          </div>
           <textarea
             className="control-group group"
             type="text"
             placeholder="기준이 되는 텍스트를 입력해 주세요."
-            value={inputText1}  
+            value={inputText1}
             onChange={(e) => setInputText1(e.target.value)}
           />
           <div className="change-button" onClick={changeHandler}></div>
@@ -91,12 +87,30 @@ function App() {
           />
         </div>
 
-        <div className="compare-button button" onClick={compareHandler}>비교하기</div>
+        <div className="compare-button button" onClick={compareHandler}>
+          비교하기
+        </div>
 
         {result !== null && (
-          <div className="compare-result">결과: {result}</div>
+          <div className="compare-result">
+            결과:{" "}
+            {Array.isArray(result) ? (
+              <>
+                {result.map((index, i) => (
+                  <React.Fragment key={i}>
+                    {inputText2.slice(result[i - 1] + 1, index)}
+                    <span style={{ color: "red" }}>
+                      {inputText2.slice(index, index + 1)}
+                    </span>
+                  </React.Fragment>
+                ))}
+                {inputText2.slice(result[result.length - 1] + 1)}
+              </>
+            ) : (
+              result
+            )}
+          </div>
         )}
-        {/* 조건부 !== null %% 사용 */}
       </div>
     </React.Fragment>
   );
