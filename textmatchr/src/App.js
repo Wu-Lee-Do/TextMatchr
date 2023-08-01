@@ -9,23 +9,11 @@ const GlobalStyle = createGlobalStyle`
   /* other styles */
 `;
 
-//불일치 하이라이트 로직
-const findDifference = (inputText1, inputText2) => {
-  const differences = [];
-  const maxLength = Math.max(inputText1.length, inputText2.length);
-  for (let i = 0; i < maxLength; i++) {
-    if (inputText1[i] !== inputText2[i]) {
-      differences.push(i);
-    }
-  }
-  return differences;
-};
-
-
 function App() {
   const [inputText1, setInputText1] = useState("");
   const [inputText2, setInputText2] = useState("");
   const [result, setResult] = useState("");
+  const [detailResult, setDetailResult] = useState("");
 
   const compareHandler = () => {
     if (inputText1 === "" | null && inputText2 === "" | null){
@@ -35,16 +23,17 @@ function App() {
     }else if (inputText1 !== "" | null && inputText2 === "" | null){
       setResult("비교하려는 텍스트를 입력해 주세요.");
     }else if (inputText1 === inputText2 && inputText1 !== "" | null && inputText2 !== "" | null){
-      setResult("일치");
+      setResult("결과: 일치");
     }else if (inputText1 !== inputText2){
-      setResult("불일치");
+      setResult("결과: 불일치");
+      setDetailResult(findDifference(inputText1, inputText2));
     }
     
-    if (inputText1 === inputText2) {
-      setResult("일치");
-    } else {
-      setResult(findDifference(inputText1, inputText2));
-    }
+    // if (inputText1 === inputText2) {
+    //   setResult("일치");
+    // } else {
+    //   setResult(findDifference(inputText1, inputText2));
+    // }
   };
 
   const resetHandler = () => {
@@ -56,6 +45,18 @@ function App() {
   const changeHandler = () => {
     setInputText1(inputText2);
     setInputText2(inputText1);
+  };
+
+  //불일치 하이라이트 로직
+  const findDifference = (inputText1, inputText2) => {
+    const differences = [];
+    const maxLength = Math.max(inputText1.length, inputText2.length);
+    for (let i = 0; i < maxLength; i++) {
+      if (inputText1[i] !== inputText2[i]) {
+        differences.push(i);
+      }
+    }
+    return differences;
   };
   
   //불일치 하이라이트 로직
@@ -92,23 +93,24 @@ function App() {
           비교하기
         </div>
         <div className="compare-result">{`${result}`}</div>
-        {result !== null && (
+        {detailResult !== null && (
           <div className="compare-result">
             결과:{" "}
-            {Array.isArray(result) ? (
+            {Array.isArray(detailResult) ? (
               <>
-                {result.map((index, i) => (
-                  <React.Fragment key={i}>
-                    {inputText2.slice(result[i - 1] + 1, index)}
+                {inputText2.slice(0, detailResult[0])}
+                {detailResult.map((index, i) => (
+                  <React.Fragment key={index}>
                     <span style={{ color: "red" }}>
                       {inputText2.slice(index, index + 1)}
                     </span>
+                    {inputText2.slice(index + 1, detailResult[i + 1])}
                   </React.Fragment>
                 ))}
-                {inputText2.slice(result[result.length - 1] + 1)}
+                {inputText2.slice(detailResult[detailResult.length - 1] + 1)}
               </>
             ) : (
-              result
+              detailResult
             )}
           </div>
         )}
