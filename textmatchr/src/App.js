@@ -26,10 +26,10 @@ function App() {
       setResult("비교하려는 텍스트를 입력해 주세요.");
       setDetailResult(null);
     } else if (inputText1 === inputText2) {
-      setResult("결과: 일치");
+      setResult("일치");
       setDetailResult(null);
     } else {
-      setResult("결과: 불일치");
+      setResult("불일치");
       setDetailResult(findDifference(inputText1, inputText2));
     }
   };
@@ -58,16 +58,12 @@ function App() {
     return differences;
   };
 
-  //불일치 하이라이트 로직
-  // useEffect(() => {
-  //   setResult(findDifference(inputText1, inputText2));
-  // }, [inputText1, inputText2]);
-
   return (
     <React.Fragment>
       <GlobalStyle />
       <div id="wrapper">
         <div className="title">TextMatchr</div>
+        <div className="compare-result">{`${result}`}</div>
         <div className="group-box">
           <div className="reset-button button" onClick={resetHandler}>
             reset
@@ -91,7 +87,7 @@ function App() {
         <div className="compare-button button" onClick={compareHandler}>
           비교하기
         </div>
-        <div className="compare-result">{`${result}`}</div>
+        
         {detailResult !== null && (
           <div className="compare-result">
             결과:{" "}
@@ -117,5 +113,5 @@ function App() {
     </React.Fragment>
   );
 }
-// test
+
 export default App;
