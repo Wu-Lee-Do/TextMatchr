@@ -13,7 +13,7 @@ function App() {
   const [inputText1, setInputText1] = useState("");
   const [inputText2, setInputText2] = useState("");
   const [result, setResult] = useState("");
-  const [detailResult, setDetailResult] = useState("");
+  // const [detailResult, setDetailResult] = useState("");
 
   const compareHandler = () => {
     if (inputText1 === "" | null && inputText2 === "" | null){
@@ -26,7 +26,7 @@ function App() {
       setResult("결과: 일치");
     }else if (inputText1 !== inputText2){
       setResult("결과: 불일치");
-      setDetailResult(findDifference(inputText1, inputText2));
+      // setDetailResult(findDifference(inputText1, inputText2));
     }
     
     // if (inputText1 === inputText2) {
@@ -35,6 +35,10 @@ function App() {
     //   setResult(findDifference(inputText1, inputText2));
     // }
   };
+
+  const detailCompareHandler = () => {
+    
+  }
 
   const resetHandler = () => {
     setInputText1("");
