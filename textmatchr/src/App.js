@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import "./App.css";
 import { createGlobalStyle } from "styled-components";
@@ -13,37 +13,32 @@ function App() {
   const [inputText1, setInputText1] = useState("");
   const [inputText2, setInputText2] = useState("");
   const [result, setResult] = useState("");
-  // const [detailResult, setDetailResult] = useState("");
+  const [detailResult, setDetailResult] = useState(null);
 
   const compareHandler = () => {
-    if (inputText1 === "" | null && inputText2 === "" | null){
+    if (inputText1.trim() === "" && inputText2.trim() === "") {
       setResult("텍스트를 입력해 주세요.");
-    }else if (inputText1 === "" | null && inputText2 !== "" | null){
+      setDetailResult(null);
+    } else if (inputText1.trim() === "") {
       setResult("기준이 되는 텍스트를 입력해 주세요.");
-    }else if (inputText1 !== "" | null && inputText2 === "" | null){
+      setDetailResult(null);
+    } else if (inputText2.trim() === "") {
       setResult("비교하려는 텍스트를 입력해 주세요.");
-    }else if (inputText1 === inputText2 && inputText1 !== "" | null && inputText2 !== "" | null){
+      setDetailResult(null);
+    } else if (inputText1 === inputText2) {
       setResult("결과: 일치");
-    }else if (inputText1 !== inputText2){
+      setDetailResult(null);
+    } else {
       setResult("결과: 불일치");
-      // setDetailResult(findDifference(inputText1, inputText2));
+      setDetailResult(findDifference(inputText1, inputText2));
     }
-    
-    // if (inputText1 === inputText2) {
-    //   setResult("일치");
-    // } else {
-    //   setResult(findDifference(inputText1, inputText2));
-    // }
   };
-
-  const detailCompareHandler = () => {
-    
-  }
 
   const resetHandler = () => {
     setInputText1("");
     setInputText2("");
     setResult("");
+    setDetailResult(null);
   };
 
   const changeHandler = () => {
@@ -62,11 +57,11 @@ function App() {
     }
     return differences;
   };
-  
+
   //불일치 하이라이트 로직
-  useEffect(() => {
-    setResult(findDifference(inputText1, inputText2));
-  }, [inputText1, inputText2]);
+  // useEffect(() => {
+  //   setResult(findDifference(inputText1, inputText2));
+  // }, [inputText1, inputText2]);
 
   return (
     <React.Fragment>
